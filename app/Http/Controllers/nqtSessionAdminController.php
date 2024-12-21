@@ -2,22 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\nqtKhachHang;
+use App\Models\nqtLoaiSanPham;
+use App\Models\nqtQuanTri;
+use App\Models\nqtSanPham;
 use Illuminate\Http\Request;
 
 class nqtSessionAdminController extends Controller
 {
+    public function __construct()
+    {
+        // Áp dụng middleware cho tất cả các hành động trong controller này
+        $this->middleware('nqtcheckAdminSession');
+    }
     public function getSessionData(Request $request)
     {
-        // Debug the full session array
-        // var_dump($request->session()->all());
-
-        // Check if the 'admin' key exists and contains the 'id'
+        // Kiểm tra xem session có chứa admin ID hay không
         if ($request->session()->has('admin.id')) {
-            return view('nqtAdmin.Dashboard');
+            // Lấy dữ liệu từ model (hoặc logic)
+            $nqttotalUsers = nqtKhachHang::count(); // Đếm số lượng người dùng (giả sử có model User)
+            $nqttotalTypeProducts = nqtLoaiSanPham::count(); // Tương tự với sản phẩm
+            $nqttotalProducts = nqtSanPham::count(); // Tương tự với bình luận
+            $nqttotalAdmins = nqtQuanTri::count(); // Tương tự với admin
+            $nqtUserAdmin = $request->session()->get('admin.email', 'Quản trị viên');
+            // Truyền dữ liệu sang view
+            return view('nqtAdmin.nqtDashboard', compact('nqttotalUsers', 'nqttotalTypeProducts', 'nqttotalProducts', 'nqttotalAdmins', 'nqtUserAdmin'));
         } else {
-            echo "<h2> Không có dữ liệu trong session </h2>";
+            return redirect('/admin');
         }
     }
+
 
     #Lưu dữ liệu vào session
     public function storeSessionData(Request $request)
@@ -36,7 +50,8 @@ class nqtSessionAdminController extends Controller
         echo "<h2> Dữ liệu đã được xóa khỏi session </h2>";
 
         // Chuyển hướng về trang login
-        return redirect('/admin');
+        return redirect('/admin')->with('nqt-error', 'Đăng xuất thành công!');
+
     }
 
 }

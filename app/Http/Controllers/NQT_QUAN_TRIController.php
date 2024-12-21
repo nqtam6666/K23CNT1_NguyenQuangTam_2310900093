@@ -13,7 +13,7 @@ class NQT_QUAN_TRIController extends Controller
         // Kiểm tra nếu session 'admin' tồn tại
         if ($request->session()->has('admin')) {
             // Nếu có session, chuyển hướng đến dashboard
-            return redirect()->route('admin.getSession'); // Thay 'dashboard' bằng route thực tế của bạn
+            return redirect()->route('nqtadmin.getSession1'); // Thay 'dashboard' bằng route thực tế của bạn
         }
 
         // Nếu không có session, hiển thị trang đăng nhập
@@ -46,7 +46,7 @@ class NQT_QUAN_TRIController extends Controller
             ]);
 
             // Redirect to the homepage
-            return redirect('/dashboard')->with('nqt-success', 'Đăng nhập thành công!');
+            return redirect('/nqt-admin')->with('nqt-success', 'Đăng nhập thành công!');
         }
 
         // If authentication fails, redirect back with an error

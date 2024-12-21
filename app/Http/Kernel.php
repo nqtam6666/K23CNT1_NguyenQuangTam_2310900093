@@ -13,6 +13,11 @@ class Kernel extends HttpKernel
      *
      * @var array<int, class-string|string>
      */
+    protected $routeMiddleware = [
+        // Các middleware mặc định khác...
+        'nqtcheckAdminSession' => \App\Http\Middleware\nqtCheckAdminSession::class,
+    ];
+
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,

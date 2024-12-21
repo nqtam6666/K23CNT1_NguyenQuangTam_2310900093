@@ -15,7 +15,7 @@
             <div class="card-body">
                 <!-- Display Success Message -->
                 @if(session('nqt-success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success"style="font-weight: bold;">
                         {{ session('nqt-success') }}
                     </div>
                 @endif
@@ -29,14 +29,14 @@
                     @csrf <!-- Include CSRF token -->
                     <div class="mb-3">
                         <label for="nqtusername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="nqtusername" name="nqtusername" autocomplete="username">
+                        <input type="text" class="form-control" id="nqtusername" name="nqtusername" value="nguyenquangtam179@gmail.com">
                         @error('nqtusername')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="nqtpassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="nqtpassword" name="nqtpassword" autocomplete="current-password">
+                        <input type="password" class="form-control" id="nqtpassword" name="nqtpassword" value="123456@">
                         @error('nqtpassword')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
