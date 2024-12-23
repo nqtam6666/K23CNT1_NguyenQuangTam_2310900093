@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\NQT_QUAN_TRIController;
 use App\Http\Controllers\nqtAdminController;
-use App\Http\Controllers\nqtAdminDashboardController;
+use App\Http\Controllers\nqtHoaDonController;
 use App\Http\Controllers\nqtLoaiSanPhamController;
 use App\Http\Controllers\nqtSanPhamController;
 use App\Http\Controllers\nqtSessionAdminController;
 use App\Http\Controllers\nqtUserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cookie;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/abc', function () {
+    return view('_layouts.admin.a');
 });
-
+// D:\Project\K23CNT1_NguyenQuangTam_2310900093\resources\views\_layouts\admin\a.blade.php
 Route::get('/admin', [NQT_QUAN_TRIController::class, 'nqtlogin'])->name('admin.nqtLogin');
 Route::post('/admin', [NQT_QUAN_TRIController::class, 'nqtloginSubmit'])->name('admin.nqtLoginSubmit');
 
@@ -34,7 +35,7 @@ Route::get('/nqt-admin', [nqtSessionAdminController::class,'getSessionData'])->n
 Route::get('/nqt-admin/logout', [nqtSessionAdminController::class,'deleteSessionData'])->name( 'nqtadmin.deleSession1'); //đăng xuất
 
 
-Route::get('/nqt-admin/nqt-loai-san-pham/search', [nqtLoaiSanPhamController::class, 'nqtSearch'])->name('nqtadmin.mqtsearchLoaisp');
+Route::get('/nqt-admin/nqt-loai-san-pham/search', [nqtLoaiSanPhamController::class, 'nqtSearch'])->name('nqtadmin.nqtsearchLoaisp');
 
 Route::get('/nqt-admin/nqt-loai-san-pham', [nqtLoaiSanPhamController::class,'nqtList'])->name('nqtadmin.nqtloaisanpham');
 Route::get('/nqt-admin/nqt-loai-san-pham/nqt-create', [nqtLoaiSanPhamController::class,'nqtCreate'])->name('nqtadmin.nqtCreateLoaiSP');
@@ -53,6 +54,8 @@ Route::get('/nqt-admin/nqt-san-pham/nqt-create', [nqtSanPhamController::class,'n
 Route::post('/nqt-admin/nqt-san-pham/nqt-create', [nqtSanPhamController::class,'nqtCreateSubmit'])->name('nqtadmin.nqtCreateSPsubmit');
 
 //sanpham
+Route::get('/nqt-admin/nqt-danh-sach-san-pham/search', [nqtSanPhamController::class, 'nqtSearch'])->name('nqtadmin.nqtsearchSanPham');
+
 route::get('/nqt-admin/nqt-danh-sach-san-pham', [nqtSanPhamController::class,'nqtList'])->name('nqtadmin.nqtSanPhams');
 //view
 Route::get('/nqt-admin/nqt-chi-tiet-san-pham/{nqtID}',[nqtSanPhamController::class, 'nqtchitietsp'])->name('nqtadmin.nqtchitietloaisp');
@@ -96,3 +99,7 @@ Route::get('/nqt-admin/nqt-admin/{nqtID}',[nqtAdminController::class, 'nqteditad
 Route::post('/nqt-admin/nqt-admin/{nqtID}',[nqtAdminController::class, 'nqteditadminSubmit'])->name('nqtadmin.nqteditadminSubmit');
 //delete
 Route::delete('/nqt-admin/nqt-xoa-loai-tai-khoan-quan-tri/{nqtID}',[nqtAdminController::class, 'nqtdeleteadmin'])->name('nqtadmin.nqtdeleteadmin');
+
+
+//hoá đơn
+Route::get('/nqt-admin/nqt-danh-sach-don-hang',[nqtHoaDonController::class, 'nqtList'])->name('nqtadmin.nqtListHoaDon');

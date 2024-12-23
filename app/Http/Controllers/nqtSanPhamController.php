@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\nqtLoaiSanPham;
 use App\Models\nqtSanPham;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class nqtSanPhamController extends nqtBaseAdminController
 {
     public function nqtList(){
-        $nqtSanPhams = nqtSanPham::all();
+        $nqtSanPhams = nqtSanPham::paginate(5);
         return view("nqtadmin.nqtSanPham.nqtList", ['nqtSanPhams'=>$nqtSanPhams]);
     }
     public function nqtCreate(){
@@ -149,4 +150,23 @@ class nqtSanPhamController extends nqtBaseAdminController
 
         return redirect()->route('nqtadmin.nqtSanPhams')->with('message', 'Loại sản phẩm đã được xoá thành công!');
     }
+
+    public function nqtSearch(Request $request)
+    {
+        $search = $request->query('nqt-search-sp');
+        $perPage = 5; // Số item cố định trên mỗi trang
+
+        if ($search) {
+            $nqtSanPhams = nqtSanPham::where('nqtTenSanPham', 'like', '%' . $search . '%')
+                ->orWhere('nqtMaSanPham', 'like', '%' . $search . '%')
+                ->paginate($perPage);
+        } else {
+            $nqtSanPhams = nqtSanPham::paginate($perPage);
+        }
+
+        return view("nqtadmin.nqtSanPham.nqtList", ['nqtSanPhams' => $nqtSanPhams]);
+    }
+
+
+
 }

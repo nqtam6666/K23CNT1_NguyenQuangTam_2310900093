@@ -22,7 +22,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        padding: 10px 15px;
+        /* padding: 10px 15px; */
         font-size: 1rem;
     }
 
@@ -48,6 +48,39 @@
     .img-button:hover {
         transform: scale(1.05);
     }
+    /* Hiệu ứng khi hover */
+    .list-group-item:hover {
+        background-color: rgb(63, 158, 170);
+        transform: translateY(-5px); /* Nhô lên khi hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    }
+
+    /* Hiệu ứng hover cho liên kết bên trong */
+    .list-group-item:hover a {
+        color: white;
+    }
+
+    /* Mục được active */
+    .list-group-item.active {
+        background-color: rgb(63, 158, 170); /* Màu nền giống hover */
+        transform: translateY(2px); /* Không nhô lên */
+        box-shadow: none; /* Không đổ bóng quá lớn */
+        font-weight: bold; /* Làm chữ đậm nếu cần */
+        padding-bottom: 5px;
+    }
+
+    /* Màu chữ khi mục active */
+    .list-group-item.active a {
+        color: rgb(0, 0, 0);
+    }
+
+    /* Đảm bảo hiệu ứng hover không ghi đè active */
+    .list-group-item.active:hover {
+        transform: translateY(0); /* Không nhô lên khi hover */
+        box-shadow: none; /* Không đổ bóng thêm */
+    }
+
+
 </style>
 
 
@@ -55,21 +88,23 @@
     <img src="{{ asset('img/meo1.png') }}" alt="Mô tả ảnh" class="rounded-corners w-100 mb-3">
 </a>
 <ul class="list-group">
-    {{-- <li style="color: red; text-align:center;margin-bottom:10px; font-weight:bolder">Chào mừng, {{ $nqtUserAdmin }}</li> --}}
+    <li class="list-group-item {{ Request::routeIs('nqtadmin.getSession1') ? 'active' : '' }}">
+        <a href="{{ route('nqtadmin.getSession1') }}">Dashboard</a>
+    </li>
+    <li class="list-group-item {{ Request::routeIs('nqtadmin.nqtloaisanpham') ? 'active' : '' }}">
+        <a href="{{ route('nqtadmin.nqtloaisanpham') }}">Danh sách loại sản phẩm</a>
+    </li>
+    <li class="list-group-item {{ Request::routeIs('nqtadmin.nqtSanPhams') ? 'active' : '' }}">
+        <a href="{{ route('nqtadmin.nqtSanPhams') }}">Danh sách sản phẩm</a>
+    </li>
+    <li class="list-group-item {{ Request::routeIs('nqtadmin.nqtListHoaDon') ? 'active' : '' }}">
+        <a href="{{route('nqtadmin.nqtListHoaDon')}}">Danh sách hoá đơn</a>
+    </li>
+    <li class="list-group-item {{ Request::routeIs('nqtadmin.nqtListUser') ? 'active' : '' }}">
+        <a href="{{ route('nqtadmin.nqtListUser') }}">Danh sách người dùng</a>
+    </li>
+    <li class="list-group-item {{ Request::routeIs('nqtadmin.nqtListAdmin') ? 'active' : '' }}">
+        <a href="{{ route('nqtadmin.nqtListAdmin') }}">Danh sách admin</a>
+    </li>
 
-    <li class="list-group-item">
-        <a href="{{route('nqtadmin.getSession1')}}">Dashboard</a>
-    </li>
-    <li class="list-group-item">
-        <a href="{{route('nqtadmin.nqtloaisanpham')}}">Danh sách loại sản phẩm</a>
-    </li>
-    <li class="list-group-item">
-        <a href="{{route('nqtadmin.nqtSanPhams')}}">Danh sách sản phẩm</a>
-    </li>
-    <li class="list-group-item">
-        <a href="{{route('nqtadmin.nqtListUser')}}">Danh sách người dùng</a>
-    </li>
-    <li class="list-group-item">
-        <a href="{{route('nqtadmin.nqtListAdmin')}}">Danh sách admin</a>
-    </li>
 </ul>

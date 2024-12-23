@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\nqtQuanTri;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,23 @@ class nqtCheckAdminSession
      */
     public function handle(Request $request, Closure $next)
     {
-        // Kiểm tra nếu session có chứa 'admin.id'
         if (!$request->session()->has('admin.id')) {
-            // Nếu không, chuyển hướng về trang đăng nhập hoặc trang khác
+            // Check for remember token
+            $rememberToken = $request->cookie('remember_admin');
+            if ($rememberToken) {
+                $admin = nqtQuanTri::where('remember_token', $rememberToken)->first();
+                if ($admin) {
+                    // Re-authenticate the user
+                    $request->session()->put('admin', [
+                        'id' => $admin->id,
+                        'email' => $admin->nqtTaiKhoan,
+                        'status' => $admin->nqtTrangThai,
+                    ]);
+                    return $next($request);
+                }
+            }
             return redirect('/admin');
         }
-
-        // Nếu có, tiếp tục xử lý yêu cầu
         return $next($request);
     }
 }

@@ -31,9 +31,10 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+        // config/session.php
+    'lifetime' => env('SESSION_LIFETIME', 120), // Thời gian sống mặc định cho session (ví dụ: 120 phút)
+    'expire_on_close' => false, // Phiên sẽ không hết hạn khi đóng trình duyệt
 
-    'expire_on_close' => false,
 
     /*
     |--------------------------------------------------------------------------

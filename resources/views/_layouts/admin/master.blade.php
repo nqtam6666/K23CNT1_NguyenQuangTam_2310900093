@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.5/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <title>@yield('title')</title>
     <style>
@@ -153,6 +154,67 @@
         });
 
     </script>
+    {{-- <script>
+        // Hàm để lấy giá trị của cookie
+        function getCookie(cookieName) {
+            const cookies = document.cookie.split("; ");
+            for (let cookie of cookies) {
+                const [name, value] = cookie.split("=");
+                if (name === cookieName) {
+                    return value;
+                }
+            }
+            return null;
+        }
 
+        // Hàm tính toán thời gian còn lại
+        function calculateRemainingTime(expiryTime) {
+            const currentTime = Date.now();
+            return Math.floor((expiryTime - currentTime) / 1000); // Thời gian còn lại (giây)
+        }
+
+        // Hàm hiển thị thời gian còn lại
+        function displayRemainingTime(cookieName, elementId, maxAgeSeconds) {
+            const expiryKey = `${cookieName}_expiry`;
+            const cookieValueKey = `${cookieName}_value`;
+
+            // Lấy giá trị cookie hiện tại
+            const currentCookieValue = getCookie(cookieName);
+
+            // Kiểm tra cookie mới hay cũ
+            let expiryTime = localStorage.getItem(expiryKey);
+            let savedCookieValue = localStorage.getItem(cookieValueKey);
+
+            if (!expiryTime || currentCookieValue !== savedCookieValue) {
+                // Nếu cookie mới hoặc chưa lưu, thiết lập lại thời gian hết hạn
+                expiryTime = Date.now() + maxAgeSeconds * 1000; // Thời gian hết hạn (millisecond)
+                localStorage.setItem(expiryKey, expiryTime);
+                localStorage.setItem(cookieValueKey, currentCookieValue);
+            } else {
+                expiryTime = parseInt(expiryTime, 10); // Lấy giá trị từ localStorage
+            }
+
+            // Cập nhật thời gian mỗi giây
+            const interval = setInterval(() => {
+                const remainingTime = calculateRemainingTime(expiryTime);
+
+                if (remainingTime <= 0) {
+                    document.getElementById(elementId).innerText = "Cookie đã hết hạn!";
+                    clearInterval(interval);
+                    localStorage.removeItem(expiryKey);
+                    localStorage.removeItem(cookieValueKey);
+                } else {
+                    document.getElementById(elementId).innerText = `Còn lại: ${remainingTime} giây`;
+                }
+            }, 1000);
+        }
+
+        // Gọi hàm theo dõi cookie khi trang load
+        document.addEventListener("DOMContentLoaded", () => {
+            // Đặt Max-Age cho cookie bạn muốn theo dõi
+            // const maxAgeForSessionCookie = 2592000; // Ví dụ: 30 ngày = 2592000 giây
+            displayRemainingTime("laravel_session", "cookie-timer", '');
+        });
+    </script> --}}
 </body>
 </html>

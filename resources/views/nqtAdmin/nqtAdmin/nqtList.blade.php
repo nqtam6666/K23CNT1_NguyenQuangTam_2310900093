@@ -31,16 +31,26 @@
                             <td>{{$item->nqtTrangThai==1?"Hiển thị":"Ẩn"}}</td>
 
                             <td class="text-center">
-                                <a href="/nqt-admin/nqt-admin-view/{{$item->id}}" ><div class="btn btn-success"><i class="fa-solid fa-circle-info"></i></div></a>
-                                <a href="/nqt-admin/nqt-admin/{{$item->id}}" ><div class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></div></a>
+                                <!-- View Button -->
+                                <button class="btn btn-success me-1 rounded-circle" onclick="window.location.href='/nqt-admin/nqt-admin-view/{{$item->id}}'" title="Xem chi tiết">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </button>
+
+                                <!-- Edit Button -->
+                                <button class="btn btn-primary me-1 rounded-circle" onclick="window.location.href='/nqt-admin/nqt-admin/{{$item->id}}'" title="Chỉnh sửa">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+
+                                <!-- Delete Button -->
                                 <form action="{{ route('nqtadmin.nqtdeleteadmin', $item->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Bạn chắc chắn muốn xoá loại sản phẩm này?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger me-1 rounded-circle" title="Xoá">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
                             </td>
+
                         </tr>
                     @empty
 

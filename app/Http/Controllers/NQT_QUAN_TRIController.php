@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\nqtQuanTri; // Import the nqtQuanTri model
-
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cookie;
 class NQT_QUAN_TRIController extends Controller
 {
     // GET: Show the login page
@@ -24,32 +26,80 @@ class NQT_QUAN_TRIController extends Controller
     // POST: Handle login submission
     public function nqtloginSubmit(Request $request)
     {
-        // Validate the input
+        // Validate đầu vào
         $request->validate([
             'nqtusername' => 'required|min:6',
             'nqtpassword' => 'required|min:6',
         ]);
 
-        // Retrieve the input data
+        // Lấy dữ liệu đầu vào
         $data = $request->only(['nqtusername', 'nqtpassword']);
 
-        // Check if the user exists in the database
+        // Kiểm tra user trong database
         $admin = nqtQuanTri::where('nqtTaiKhoan', $data['nqtusername'])->first();
 
-        // If the user exists and the password is correct
+        // Nếu user tồn tại và mật khẩu đúng
         if ($admin && md5($data['nqtpassword']) === $admin->nqtMatKhau) {
-            // Store user data in the session
-            $request->session()->put('admin', [
+            // Chuẩn bị dữ liệu session
+            $sessionData = [
                 'id' => $admin->id,
                 'email' => $admin->nqtTaiKhoan,
                 'status' => $admin->nqtTrangThai,
-            ]);
+            ];
 
-            // Redirect to the homepage
+            // Thiết lập thời gian sống mặc định
+            $lifetime = env('SESSION_LIFETIME', 120); // Mặc định 2 giờ nếu không set trong .env
+
+            // Xử lý remember me
+            if ($request->has('remember')) {
+                // Set lifetime là 30 ngày nếu check remember
+                $lifetime = 43200; // 30 ngày tính bằng phút
+
+                // Set cookie remember
+                Cookie::queue('remember', 'true', $lifetime);
+
+                // Set các cookie session với lifetime 30 ngày
+                Cookie::queue(
+                    'XSRF-TOKEN',
+                    $request->session()->token(),
+                    $lifetime
+                );
+
+                Cookie::queue(
+                    'laravel_session',
+                    $request->session()->getId(),
+                    $lifetime
+                );
+            } else {
+                // Nếu không check remember, xóa cookie remember nếu có
+                Cookie::queue(Cookie::forget('remember'));
+
+                // Set các cookie session với lifetime mặc định
+                Cookie::queue(
+                    'XSRF-TOKEN',
+                    $request->session()->token(),
+                    $lifetime
+                );
+
+                Cookie::queue(
+                    'laravel_session',
+                    $request->session()->getId(),
+                    $lifetime
+                );
+            }
+
+            // Lưu session data
+            $request->session()->put('admin', $sessionData);
+
+            // Redirect sau khi đăng nhập thành công
             return redirect('/nqt-admin')->with('nqt-success', 'Đăng nhập thành công!');
         }
 
-        // If authentication fails, redirect back with an error
+        // Trả về lỗi nếu đăng nhập thất bại
         return redirect()->back()->with('nqt-error', 'Lỗi đăng nhập: Tên đăng nhập hoặc mật khẩu không đúng.');
     }
+
+
+
+
 }

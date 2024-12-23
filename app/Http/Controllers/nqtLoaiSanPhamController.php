@@ -19,7 +19,7 @@ class nqtLoaiSanPhamController extends nqtBaseAdminController
                 ->orWhere('nqtTenLoai', 'like', '%' . $search . '%');
         }
 
-        $nqtloaisp = $query->paginate(10);
+        $nqtloaisp = $query->paginate(5);
 
         return view("nqtAdmin.nqtLoaiSanPham.nqtList", ['nqtloaisp' => $nqtloaisp]);
     }
@@ -106,10 +106,10 @@ class nqtLoaiSanPhamController extends nqtBaseAdminController
         if ($search) {
             $nqtloaisp = nqtLoaiSanPham::where('nqtMaLoai', 'like', '%' . $search . '%')
                 ->orWhere('nqtTenLoai', 'like', '%' . $search . '%')
-                ->paginate(10);  // Use the same number as in nqtList
+                ->paginate(5);  // Use the same number as in nqtList
         } else {
             // Use paginate() instead of all()
-            $nqtloaisp = nqtLoaiSanPham::paginate(10);
+            $nqtloaisp = nqtLoaiSanPham::paginate(5);
         }
 
         return view("nqtAdmin.nqtLoaiSanPham.nqtList", ['nqtloaisp' => $nqtloaisp]);
