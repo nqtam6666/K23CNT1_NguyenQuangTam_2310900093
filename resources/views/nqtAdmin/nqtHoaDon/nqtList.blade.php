@@ -10,7 +10,7 @@
         <div class="row mb-3">
             <h1>Danh sách hoá đơn</h1>
         </div>
-        <a href="{{ route('nqtadmin.nqtCreateAdmin') }}" class="btn btn-success mb-3">Thêm mới</a>
+        <a href="{{ route('nqtadmin.nqtCreateAdmin') }}" class="btn btn-success mb-3"><i class="fa-solid fa-plus"></i> Thêm mới</a>
 
         <div class="table-responsive">
             <table class="table  table-striped table-hover text-center">

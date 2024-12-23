@@ -30,15 +30,12 @@
                     </div>
                     <div class="col-3">
                         <select class="form-select" style="font-size: 1.5rem; border-width: 2px; border-color: black; border-style: solid; height: 60px;" name="nqtTrangThai">
-                            <option value="1" {{ $nqtadmin->nqtTrangThai == 1 ? 'selected' : '' }}>Hiển thị</option>
-                            <option value="0" {{ $nqtadmin->nqtTrangThai == 0 ? 'selected' : '' }}>Ẩn</option>
+                            <option value="1" {{ $nqtadmin->nqtTrangThai == 1 ? 'selected' : '' }}>Hoạt động</option>
+                            <option value="0" {{ $nqtadmin->nqtTrangThai == 0 ? 'selected' : '' }}>Khoá</option>
                         </select>
 
                     </div>
                 </div>
-                @php
-                    $id_ = $nqtadmin->id;
-                @endphp
             </section>
             <div>
                 <button class="btn btn-success">Sửa</button>

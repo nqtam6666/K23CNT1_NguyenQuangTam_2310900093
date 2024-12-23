@@ -1,5 +1,5 @@
 @extends('_layouts.admin.master')
-@section('title', 'Danh sách người dùng')
+@section('title', 'Danh sách tài khoản quản trị')
 @section('content-body')
     <div class="container my-4">
         @if (session('message'))
@@ -8,9 +8,9 @@
         </div>
         @endif
         <div class="row mb-3">
-            <h1>Danh sách người dùng</h1>
+            <h1>Danh sách tài khoản quản trị</h1>
         </div>
-        <a href="{{route('nqtadmin.nqtCreateAdmin')}}"><button class="btn btn-success 10px mb-3">Thêm mới</button></a>
+        <a href="{{route('nqtadmin.nqtCreateAdmin')}}"><button class="btn btn-success 10px mb-3"> <i class="fa-solid fa-plus"></i> Thêm mới</button></a>
         <div class="row text-center">
             <table class="table table-bordered">
                 <thead>
@@ -28,7 +28,7 @@
                             <td class="text-center">{{$loop->iteration}}</td>
                             <td>{{$item->nqtTaiKhoan}}</td>
                             <td>{{$item->nqtMatKhau}}</td>
-                            <td>{{$item->nqtTrangThai==1?"Hiển thị":"Ẩn"}}</td>
+                            <td>{{$item->nqtTrangThai==1?"Hoạt động":"Khoá"}}</td>
 
                             <td class="text-center">
                                 <!-- View Button -->

@@ -100,7 +100,7 @@
                     </div>
                     <div class="stats-info">
                         <h5>Tổng hoá đơn</h5>
-                        <h3>#</h3>
+                        <h3>{{$nqttotalHoaDon}}</h3>
                     </div>
                     <a href="{{route('nqtadmin.nqtListHoaDon')}}" class="stats-link">
                         Quản lý hoá đơn <i class="fas fa-arrow-right"></i>

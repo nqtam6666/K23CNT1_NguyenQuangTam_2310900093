@@ -40,63 +40,70 @@ class NQT_QUAN_TRIController extends Controller
 
         // Nếu user tồn tại và mật khẩu đúng
         if ($admin && md5($data['nqtpassword']) === $admin->nqtMatKhau) {
-            // Chuẩn bị dữ liệu session
-            $sessionData = [
-                'id' => $admin->id,
-                'email' => $admin->nqtTaiKhoan,
-                'status' => $admin->nqtTrangThai,
-            ];
+            if($admin->nqtTrangThai != 0){
+                // Chuẩn bị dữ liệu session
+                $sessionData = [
+                    'id' => $admin->id,
+                    'email' => $admin->nqtTaiKhoan,
+                    'status' => $admin->nqtTrangThai,
+                ];
 
-            // Thiết lập thời gian sống mặc định
-            $lifetime = env('SESSION_LIFETIME', 120); // Mặc định 2 giờ nếu không set trong .env
+                // Thiết lập thời gian sống mặc định
+                $lifetime = env('SESSION_LIFETIME', 120); // Mặc định 2 giờ nếu không set trong .env
 
-            // Xử lý remember me
-            if ($request->has('remember')) {
-                // Set lifetime là 30 ngày nếu check remember
-                $lifetime = 43200; // 30 ngày tính bằng phút
+                // Xử lý remember me
+                if ($request->has('remember')) {
+                    // Set lifetime là 30 ngày nếu check remember
+                    $lifetime = 43200; // 30 ngày tính bằng phút
 
-                // Set cookie remember
-                Cookie::queue('remember', 'true', $lifetime);
+                    // Set cookie remember
+                    Cookie::queue('remember', 'true', $lifetime);
 
-                // Set các cookie session với lifetime 30 ngày
-                Cookie::queue(
-                    'XSRF-TOKEN',
-                    $request->session()->token(),
-                    $lifetime
-                );
+                    // Set các cookie session với lifetime 30 ngày
+                    Cookie::queue(
+                        'XSRF-TOKEN',
+                        $request->session()->token(),
+                        $lifetime
+                    );
 
-                Cookie::queue(
-                    'laravel_session',
-                    $request->session()->getId(),
-                    $lifetime
-                );
-            } else {
-                // Nếu không check remember, xóa cookie remember nếu có
-                Cookie::queue(Cookie::forget('remember'));
+                    Cookie::queue(
+                        'laravel_session',
+                        $request->session()->getId(),
+                        $lifetime
+                    );
+                } else {
+                    // Nếu không check remember, xóa cookie remember nếu có
+                    Cookie::queue(Cookie::forget('remember'));
 
-                // Set các cookie session với lifetime mặc định
-                Cookie::queue(
-                    'XSRF-TOKEN',
-                    $request->session()->token(),
-                    $lifetime
-                );
+                    // Set các cookie session với lifetime mặc định
+                    Cookie::queue(
+                        'XSRF-TOKEN',
+                        $request->session()->token(),
+                        $lifetime
+                    );
 
-                Cookie::queue(
-                    'laravel_session',
-                    $request->session()->getId(),
-                    $lifetime
-                );
+                    Cookie::queue(
+                        'laravel_session',
+                        $request->session()->getId(),
+                        $lifetime
+                    );
+                }
+
+                // Lưu session data
+                $request->session()->put('admin', $sessionData);
+
+                // Redirect sau khi đăng nhập thành công
+                return redirect(route('nqtadmin.getSession1'))->with('nqt-success', 'Đăng nhập thành công!');
+            }
+            else{
+                return redirect()->back()->with('nqt-error', 'Tài khoản bị khoá');
+
             }
 
-            // Lưu session data
-            $request->session()->put('admin', $sessionData);
-
-            // Redirect sau khi đăng nhập thành công
-            return redirect('/nqt-admin')->with('nqt-success', 'Đăng nhập thành công!');
         }
 
         // Trả về lỗi nếu đăng nhập thất bại
-        return redirect()->back()->with('nqt-error', 'Lỗi đăng nhập: Tên đăng nhập hoặc mật khẩu không đúng.');
+        return redirect()->back()->with('nqt-error', 'Tên đăng nhập hoặc mật khẩu không đúng.');
     }
 
 

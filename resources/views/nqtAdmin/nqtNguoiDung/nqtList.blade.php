@@ -10,7 +10,7 @@
         <div class="row mb-3">
             <h1>Danh sách người dùng</h1>
         </div>
-        <a href="{{route('nqtadmin.nqtCreateUser')}}"><button class="btn btn-success 10px mb-3">Thêm mới</button></a>
+        <a href="{{route('nqtadmin.nqtCreateUser')}}"><button class="btn btn-success 10px mb-3"><i class="fa-solid fa-plus"></i> Thêm mới</button></a>
         <div class="row text-center">
             <table class="table table-bordered">
                 <thead>

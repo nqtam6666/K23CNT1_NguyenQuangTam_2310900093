@@ -22,7 +22,6 @@
         </form>
     </div>
     {{-- <p id="cookie-timer"></p> --}}
-
     <!-- Right Side -->
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
@@ -115,13 +114,14 @@
 .navbar-left-section {
     display: flex;
     align-items: center;
-    transition: margin-left 0.3s ease; /* Adds a smooth transition effect */
-    margin-left: -250px !important;   /* Removes left margin */
-    padding-left: 0 !important;  /* Removes left padding */
+    transition: margin-left 0.3s ease;
+    margin-left: -250px !important;  /* Giữ nguyên vị trí ban đầu */
+    padding-left: 0 !important;
 }
 
-.navbar-left-section.active {
-    margin-left: 0px !important; /* When 'active' class is added, move to the right */
+/* Khi sidebar collapse */
+.sidebar-collapse .navbar-left-section {
+    margin-left: -10px !important;  /* Di chuyển sang phải 200px khi collapse */
 }
 
 .nav-link[data-widget="pushmenu"] {

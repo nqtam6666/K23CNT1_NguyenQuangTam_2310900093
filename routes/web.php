@@ -25,13 +25,13 @@ Route::get('/abc', function () {
     return view('_layouts.admin.a');
 });
 // D:\Project\K23CNT1_NguyenQuangTam_2310900093\resources\views\_layouts\admin\a.blade.php
-Route::get('/admin', [NQT_QUAN_TRIController::class, 'nqtlogin'])->name('admin.nqtLogin');
-Route::post('/admin', [NQT_QUAN_TRIController::class, 'nqtloginSubmit'])->name('admin.nqtLoginSubmit');
+Route::get('/nqt-admin/nqt-login', [NQT_QUAN_TRIController::class, 'nqtlogin'])->name('admin.nqtLogin');
+Route::post('/nqt-admin/nqt-login', [NQT_QUAN_TRIController::class, 'nqtloginSubmit'])->name('admin.nqtLoginSubmit');
 
 // Route::get('/dashboard', [nqtSessionAdminController::class,'getSessionData'])->name( 'admin.getSession'); //admin page
 // Route::get('/dashboard/z', [nqtSessionAdminController::class,'deleteSessionData'])->name( 'admin.deleSession'); //đăng xuất
 
-Route::get('/nqt-admin', [nqtSessionAdminController::class,'getSessionData'])->name( 'nqtadmin.getSession1'); //admin page
+Route::get('/nqt-admin/dashboard', [nqtSessionAdminController::class,'getSessionData'])->name( 'nqtadmin.getSession1'); //admin page
 Route::get('/nqt-admin/logout', [nqtSessionAdminController::class,'deleteSessionData'])->name( 'nqtadmin.deleSession1'); //đăng xuất
 
 

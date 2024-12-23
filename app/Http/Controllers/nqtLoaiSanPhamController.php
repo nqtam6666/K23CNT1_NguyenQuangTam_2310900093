@@ -34,7 +34,11 @@ class nqtLoaiSanPhamController extends nqtBaseAdminController
             'nqtMaLoai' => 'required|min:1|unique:nqt_loai_san_pham,nqtMaLoai',
             'nqtTenLoai' => 'required|string|min:1|max:255',
             'nqtTrangThai' => 'required|boolean',
-        ]);
+        ],
+    [
+        'nqtMaLoai.unique'=>'Mã loại này đã có rồi',
+        'nqtTenLoai.required'=>'Tên loại là bắt buộc'
+    ]);
 
         // Nếu dữ liệu hợp lệ, tiếp tục lưu
         $nqtLoaiSanPham = new nqtLoaiSanPham;

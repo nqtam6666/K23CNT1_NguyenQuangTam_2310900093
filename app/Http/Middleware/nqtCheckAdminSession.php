@@ -31,7 +31,7 @@ class nqtCheckAdminSession
                     return $next($request);
                 }
             }
-            return redirect('/admin');
+            return redirect(route('nqtadmin.getSession1'));
         }
         return $next($request);
     }

@@ -77,7 +77,7 @@ class nqtAdminController extends nqtBaseAdminController
             $nqtEdit->save();
 
             // Redirect về trang cần thiết với thông báo thành công
-            return redirect()->route('nqtadmin.nqtListAdmin')->with('message', 'Sửa loại sản phẩm thành công!'.'$id');
+            return redirect()->route('nqtadmin.nqtListAdmin')->with('message', 'Sửa admin thành công!');
         } else {
             // Xử lý nếu không tìm thấy bản ghi
             return redirect()->route('nqtadmin.nqtListAdmin')->with('message', 'Không có bản ghi!');

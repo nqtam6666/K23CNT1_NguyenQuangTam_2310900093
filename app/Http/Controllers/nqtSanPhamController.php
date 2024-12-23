@@ -23,16 +23,20 @@ class nqtSanPhamController extends nqtBaseAdminController
     {
         // Validate dữ liệu từ form
         $validatedData = $request->validate([
+            'nqtMaSanPham' => 'required|min:1|unique:nqt_san_pham,nqtMaSanPham',
             'nqtTenSanPham' => 'required|string|max:255',
             'nqtSoLuong' => 'required|integer|min:1',
             'nqtDonGia' => 'required|numeric|min:0',
-            'nqtMaLoai' => 'required',
             'nqtTrangThai' => 'required|in:1,0',
+            'nqtMaLoai'=>'required',
             'nqtHinhAnh' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ], [
+            'nqtMaSanPham.required'=>'Mã sản phẩm là bắt buộc',
+            'nqtMaSanPham.unique'=> 'Mã này đã tồn tại',
             'nqtTenSanPham.required' => 'Tên sản phẩm là bắt buộc.',
             'nqtSoLuong.required' => 'Số lượng sản phẩm là bắt buộc.',
             'nqtDonGia.required' => 'Đơn giá là bắt buộc.',
+            'nqtMaLoai.required'=>'Mã loại là bắt buộc',
             'nqtHinhAnh.image' => 'Hình ảnh phải có định dạng hợp lệ (jpg, jpeg, png, gif).',
             'nqtHinhAnh.max' => 'Hình ảnh không được vượt quá 2MB.',
         ]);
@@ -62,14 +66,15 @@ class nqtSanPhamController extends nqtBaseAdminController
             }
         }
 
-
         try {
+            // Lưu sản phẩm vào cơ sở dữ liệu
             $nqtSanPham->save();
             return redirect()->route('nqtadmin.nqtSanPhams')->with('success', 'Thêm sản phẩm thành công!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Có lỗi xảy ra khi thêm sản phẩm: ' . $e->getMessage());
         }
     }
+
 
 
 

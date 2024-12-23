@@ -77,10 +77,12 @@
             overflow-x: hidden;
         }
 
-
-
-
-
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -92,6 +94,14 @@
                 transform: translateX(-100%);
             }
         }
+        footer {
+            background-color: #ffffff;
+            padding: 10px; /* Điều chỉnh padding để thay đổi kích thước footer */
+            text-align: center;
+            border-top: 1px solid #9b9d9e;
+            height: 10px; /* Hoặc bạn có thể sử dụng height nếu muốn chiều cao cố định */
+        }
+
 
     </style>
 </head>
@@ -107,6 +117,9 @@
             <section class="content-body">
                 @yield('content-body')
             </section>
+            <!-- Add footer inside the wrapper section -->
+            @include('_layouts.admin.footer')
+
         </section>
     </section>
 
@@ -116,105 +129,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/js/adminlte.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // Xử lý sự kiện click nút pushmenu
-            $('[data-widget="pushmenu"]').on('click', function(e) {
-                e.preventDefault();
-                $('#main-container').toggleClass('sidebar-collapse');
+        $(document).ready(function () {
+        $('[data-widget="pushmenu"]').on('click', function (e) {
+            e.preventDefault();
+            $('#main-container').toggleClass('sidebar-collapse');
 
-                // Lưu trạng thái vào localStorage
-                const isSidebarCollapsed = $('#main-container').hasClass('sidebar-collapse');
-                localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
-            });
-
-            // Khôi phục trạng thái từ localStorage khi tải trang
-            const savedState = localStorage.getItem('sidebarCollapsed');
-            if (savedState === 'true') {
-                $('#main-container').addClass('sidebar-collapse');
-            }
-
-            // Xử lý responsive
-            $(window).on('resize', function() {
-                if ($(window).width() <= 768) {
-                    $('#main-container').addClass('sidebar-collapse');
-                }
-            });
+            // const isCollapsed = $('#main-container').hasClass('sidebar-collapse');
+            // localStorage.setItem('sidebarCollapsed', isCollapsed);
         });
+
+        // const savedState = localStorage.getItem('sidebarCollapsed');
+        // if (savedState === 'true') {
+        //     $('#main-container').addClass('sidebar-collapse');
+        }
+    });
     </script>
 
-    <script>
-        // Get the pushmenu button and the navbar-left-section
-        const pushMenuButton = document.querySelector('[data-widget="pushmenu"]');
-        const navbarLeftSection = document.querySelector('.navbar-left-section');
-
-        // Add an event listener for the button click
-        pushMenuButton.addEventListener('click', function () {
-            // Toggle the 'active' class to move the navbar-left-section
-            navbarLeftSection.classList.toggle('active');
-        });
-
-    </script>
-    {{-- <script>
-        // Hàm để lấy giá trị của cookie
-        function getCookie(cookieName) {
-            const cookies = document.cookie.split("; ");
-            for (let cookie of cookies) {
-                const [name, value] = cookie.split("=");
-                if (name === cookieName) {
-                    return value;
-                }
-            }
-            return null;
-        }
-
-        // Hàm tính toán thời gian còn lại
-        function calculateRemainingTime(expiryTime) {
-            const currentTime = Date.now();
-            return Math.floor((expiryTime - currentTime) / 1000); // Thời gian còn lại (giây)
-        }
-
-        // Hàm hiển thị thời gian còn lại
-        function displayRemainingTime(cookieName, elementId, maxAgeSeconds) {
-            const expiryKey = `${cookieName}_expiry`;
-            const cookieValueKey = `${cookieName}_value`;
-
-            // Lấy giá trị cookie hiện tại
-            const currentCookieValue = getCookie(cookieName);
-
-            // Kiểm tra cookie mới hay cũ
-            let expiryTime = localStorage.getItem(expiryKey);
-            let savedCookieValue = localStorage.getItem(cookieValueKey);
-
-            if (!expiryTime || currentCookieValue !== savedCookieValue) {
-                // Nếu cookie mới hoặc chưa lưu, thiết lập lại thời gian hết hạn
-                expiryTime = Date.now() + maxAgeSeconds * 1000; // Thời gian hết hạn (millisecond)
-                localStorage.setItem(expiryKey, expiryTime);
-                localStorage.setItem(cookieValueKey, currentCookieValue);
-            } else {
-                expiryTime = parseInt(expiryTime, 10); // Lấy giá trị từ localStorage
-            }
-
-            // Cập nhật thời gian mỗi giây
-            const interval = setInterval(() => {
-                const remainingTime = calculateRemainingTime(expiryTime);
-
-                if (remainingTime <= 0) {
-                    document.getElementById(elementId).innerText = "Cookie đã hết hạn!";
-                    clearInterval(interval);
-                    localStorage.removeItem(expiryKey);
-                    localStorage.removeItem(cookieValueKey);
-                } else {
-                    document.getElementById(elementId).innerText = `Còn lại: ${remainingTime} giây`;
-                }
-            }, 1000);
-        }
-
-        // Gọi hàm theo dõi cookie khi trang load
-        document.addEventListener("DOMContentLoaded", () => {
-            // Đặt Max-Age cho cookie bạn muốn theo dõi
-            // const maxAgeForSessionCookie = 2592000; // Ví dụ: 30 ngày = 2592000 giây
-            displayRemainingTime("laravel_session", "cookie-timer", '');
-        });
-    </script> --}}
 </body>
 </html>

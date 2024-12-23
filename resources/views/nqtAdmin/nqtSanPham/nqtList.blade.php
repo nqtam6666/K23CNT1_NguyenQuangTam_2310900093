@@ -10,7 +10,7 @@
         <div class="row mb-3">
             <h1>Danh sách sản phẩm</h1>
         </div>
-        <a href="{{route('nqtadmin.nqtCreateSP')}}"><button class="btn btn-success 10px mb-3">Thêm mới</button></a>
+        <a href="{{route('nqtadmin.nqtCreateSP')}}"><button class="btn btn-success 10px mb-3"><i class="fa-solid fa-plus"></i> Thêm mới</button></a>
         <form action="{{ route('nqtadmin.nqtsearchSanPham') }}" method="GET">
             <div class="row justify-content-end mb-3">
                 <div class="col-md-3 col-8 position-relative">
